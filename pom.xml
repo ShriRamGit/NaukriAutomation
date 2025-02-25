@@ -56,12 +56,6 @@
     <artifactId>webdrivermanager</artifactId>
     <version>5.9.3</version>
 </dependency>
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>7.10.2</version>
-    <scope>test</scope>
-</dependency>
 
 <!-- https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber7-adapter -->
 <dependency>

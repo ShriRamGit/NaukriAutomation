@@ -54,22 +54,22 @@ public class ProfilePageObj extends BaseClass{
 	public void uploadResume() throws AWTException
 	{
 		
-		StringSelection ss = new StringSelection("C:\\Users\\rohin\\Downloads\\Shriram_Resume_QA.pdf");
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+//		StringSelection ss = new StringSelection("C:\\Users\\rohin\\Downloads\\Shriram_Resume_QA.pdf");
+//		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+//		
+//		Robot rb = new Robot();
+//		rb.delay(2000);
+//		rb.keyPress(KeyEvent.VK_ENTER);
+//		rb.keyRelease(KeyEvent.VK_ENTER);
+//		rb.keyPress(KeyEvent.VK_CONTROL);
+//		rb.keyPress(KeyEvent.VK_V);
+//		rb.keyRelease(KeyEvent.VK_CONTROL);
+//		rb.keyRelease(KeyEvent.VK_V);
+//		rb.keyPress(KeyEvent.VK_ENTER);
+//		rb.keyRelease(KeyEvent.VK_ENTER);
 		
-		Robot rb = new Robot();
-		rb.delay(2000);
-		rb.keyPress(KeyEvent.VK_ENTER);
-		rb.keyRelease(KeyEvent.VK_ENTER);
-		rb.keyPress(KeyEvent.VK_CONTROL);
-		rb.keyPress(KeyEvent.VK_V);
-		rb.keyRelease(KeyEvent.VK_CONTROL);
-		rb.keyRelease(KeyEvent.VK_V);
-		rb.keyPress(KeyEvent.VK_ENTER);
-		rb.keyRelease(KeyEvent.VK_ENTER);
-		
-//		WebElement uploadres = driver.findElement(By.xpath("//input[@value='Update resume']"));
-//		uploadres.sendKeys("C:\\Users\\rohin\\Downloads\\Shriram_Resume_QA.pdf");
+		WebElement uploadres = driver.findElement(By.xpath("//input[@value='Update resume']"));
+		uploadres.sendKeys("C:\\Users\\rohin\\Downloads\\Shriram_Resume_QA.pdf");
 	}
 	public String validateResumeName()
 	{
