@@ -5,16 +5,25 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
+
 public class ProfilePageObj extends BaseClass{
 	String msg;
+	String location = System.getProperty("user.dir") + "\\DownloadedFiles";
 	public ProfilePageObj(WebDriver driver) {
 		super(driver);
 	}
@@ -40,6 +49,9 @@ public class ProfilePageObj extends BaseClass{
 	
 	@FindBy(xpath="//div[contains(@class,\"resume-name\")]/div")
 	WebElement resume_name;
+	
+	@FindBy(xpath="//i[text()='downloadOneTheme']")
+	WebElement download_link;
 	
 	public void clickViewProfile()
 	{
@@ -69,7 +81,7 @@ public class ProfilePageObj extends BaseClass{
 //		rb.keyRelease(KeyEvent.VK_ENTER);
 		
 		WebElement uploadres = driver.findElement(By.xpath("//input[@value='Update resume']"));
-		uploadres.sendKeys("C:\\Users\\rohin\\Downloads\\Shriram_Resume_QA.pdf");
+		uploadres.sendKeys("C:\\Users\\LENOVO\\Downloads\\Shriram_Resume_QA.pdf");
 	}
 	public String validateResumeName()
 	{
@@ -125,6 +137,52 @@ public class ProfilePageObj extends BaseClass{
 		boolean isSelected=location_add.isSelected();
 		return isSelected;
 	}
-	
-	
+	public void downloadResume() throws InterruptedException
+	{
+		download_link.click();
+		Thread.sleep(3000L);
+	}
+	public void cleandownloadfolder() throws IOException
+	{
+		File file = new File(location);
+		FileUtils.cleanDirectory(file);
+	}
+	public boolean verifyDownload()
+	{
+		
+		File folder = new File(location);
+		File [] filelist = folder.listFiles();
+		boolean isFilePresent = false;
+		for(File file : filelist)
+		{
+			if(file.isFile())
+			{
+				String filename = file.getName();
+				System.out.println(filename);
+				if(filename.equalsIgnoreCase("Resume.pdf"))
+				{
+					isFilePresent =true;
+				}
+			}
+		}	
+		return isFilePresent;		
+	}
+	public void validateDownloadedPDF(String email , String mobileno) throws IOException
+	{
+		File pdffile = new File("C:\\Users\\LENOVO\\git\\NaukriAutomation\\DownloadedFiles\\Resume.pdf");
+		
+		PDDocument document = Loader.loadPDF(pdffile);
+		
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String pdfText = pdfStripper.getText(document);
+		
+		document.close();
+		System.out.println(pdfText);
+		
+		if(pdfText.contains(email) && pdfText.contains(mobileno))
+		{
+			System.out.println("Resume contains both email and mobile number details");
+		}
+	}
+		
 }

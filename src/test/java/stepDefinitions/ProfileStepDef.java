@@ -3,6 +3,7 @@ package stepDefinitions;
 import static org.junit.Assert.*;
 
 import java.awt.AWTException;
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import factory.Base;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -95,6 +97,24 @@ public class ProfileStepDef {
 	public void resume_should_br_uploaded_successfully() {
 	    String name=pp.validateResumeName();
 	    assertTrue(name.contains("Shriram_Resume_QA.pdf"));
+	}   
+	@And("Download the resume")
+	public void resume_download() throws InterruptedException, IOException
+	{
+		pp.cleandownloadfolder();
+		pp.downloadResume();
+	}
+	
+	@Then("Verify if the resume is downloaded sucessfully")
+	public void verifyDownload()
+	{
+		assertTrue(pp.verifyDownload());
+	}
+	@And("Verify if the downloaded resume contains {string} and {string}")
+	public void verifydownloaded_file(String email , String mobno) throws IOException
+	{
+		pp.validateDownloadedPDF(email, mobno);
+	}
 	    
 	}
-}
+

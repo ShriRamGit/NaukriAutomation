@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
@@ -27,6 +29,7 @@ public class Base {
 
 	 public static WebDriver driver;
      public static Properties p;
+//     public static String download_path;
   	     
 public static WebDriver initilizeBrowser() throws IOException
 {
@@ -34,6 +37,8 @@ public static WebDriver initilizeBrowser() throws IOException
     String executionEnv = p.getProperty("execution_env");
     String browser = p.getProperty("browser").toLowerCase();
     String os = p.getProperty("os").toLowerCase();
+    String location = System.getProperty("user.dir") + "\\DownloadedFiles";
+//    download_path ="C:\\Users\\LENOVO\\Downloads\\Resume_Download";
 	
 	if(executionEnv.equalsIgnoreCase("remote"))
 	{
@@ -83,8 +88,12 @@ public static WebDriver initilizeBrowser() throws IOException
 			switch(browser.toLowerCase()) 
 			{
 			case "chrome":
+				ChromeOptions op=new ChromeOptions();
+				Map<String , Object> prefs = new HashMap<>();
+				prefs.put("download.default_directory",location);
+				op.setExperimentalOption("prefs", prefs);
 				WebDriverManager.chromedriver().setup();
-		        driver=new ChromeDriver();
+		        driver=new ChromeDriver(op);
 		        break;
 		    case "edge":
 		    	WebDriverManager.edgedriver().setup(); //wbmanager installs the compatible version of browser with driver and runs
